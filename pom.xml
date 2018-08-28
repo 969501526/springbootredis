@@ -88,6 +88,21 @@
             <artifactId>jjwt</artifactId>
             <version>0.7.0</version>
         </dependency>
+        <dependency>
+
+            <groupId>org.apache.poi</groupId>
+
+            <artifactId>poi-ooxml</artifactId>
+
+            <version>3.15-beta2</version>
+
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sf.jxls/jxls-core -->
+        <dependency>
+            <groupId>net.sf.jxls</groupId>
+            <artifactId>jxls-core</artifactId>
+            <version>1.0.3</version>
+        </dependency>
 
     </dependencies>
     <build>

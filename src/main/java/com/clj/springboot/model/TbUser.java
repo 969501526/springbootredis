@@ -1,7 +1,8 @@
 package com.clj.springboot.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class TbUser implements Serializable {
     private Long id;
@@ -72,5 +73,50 @@ public class TbUser implements Serializable {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public static List<String> getProperty(){
+        List<String> result = new ArrayList<>();
+        result.add(0, "用户id");
+        result.add(1, "密码");
+        result.add(2, "用户名");
+        result.add(3, "注册手机号");
+        result.add(4, "注册邮箱");
+        result.add(5, "创建时间");
+        result.add(6, "更新时间");
+        return result;
+    }
+    public static String[][] getcontent(List<TbUser> params){
+            String[][] content = new String[params.size()][7];
+        for (int i = 0; i < params.size(); i++) {
+            content[i] = new String[7];
+            TbUser son = params.get(i);
+            content[i][0] = son.getId().toString();
+            content[i][1] = son.getPassword();
+            content[i][2] = son.getUsername();
+            content[i][3] = son.getPhone();
+            content[i][4] = son.getEmail();
+            SimpleDateFormat sdf =new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+            content[i][5] = sdf.format(son.getCreated());
+            content[i][6] = sdf.format(son.getUpdated());
+        }
+        return content;
+    }
+
+    public static List<Integer> getRepeatNumber(List<TbUser> orderList) {
+        List<Integer> result = new ArrayList<>();
+
+        Map<Object, Integer> map = new TreeMap<>();
+        for (TbUser str : orderList) {
+            Integer num = map.get(str.getId());
+            map.put(str.getId(), num == null ? 1 : num + 1);
+        }
+
+        Iterator<Object> it01 = map.keySet().iterator();
+        while (it01.hasNext()) {
+            Object key = it01.next();
+            result.add(map.get(key));
+        }
+        return result;
     }
 }
