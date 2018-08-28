@@ -42,6 +42,7 @@ public class Test {
             FileOutputStream stream = new FileOutputStream(file);
             workbook.write(stream);
         } catch (IOException e) {
+            System.out.println(-1);
             e.printStackTrace();
         }
         System.out.println(1);
