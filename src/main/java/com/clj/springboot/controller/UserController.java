@@ -41,36 +41,40 @@ public class UserController {
 //        return info;
 //    }
 
-    @RequestMapping("selectById")
-   public String aopselectById(HttpServletRequest request, HttpServletResponse response){
-        UploadExcel ue = new UploadExcel();
-        List<TbUser> orderList = tbUserService.selectAll();
-        ue.setTitle(TbUser.getProperty());
-        ue.setContent(TbUser.getcontent(orderList));
-        ue.setSheetName("订单信息表");
-        ue.setCellRangeAddress(TbUser.getRepeatNumber(orderList));
-        ue.setMergeRow(null);
-        String fileName = ue.getSheetName() + System.currentTimeMillis()+".xls";
-        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(ue.getSheetName(), ue.getTitle(), ue.getContent(), null, ue.getCellRangeAddress(), ue.getMergeRow());
-        try {
-            this.setResponseHeader(response, fileName);
-            //FileOutputStream os = new FileOutputStream("E:/"+fileName);
-            OutputStream os = response.getOutputStream();
-            wb.write(os);
-            os.flush();
-            os.close();
-    		
-    		/*InputStream fileContent =new FileInputStream("E:/"+fileName);
-    		 //InputStream fileContent = fi.getInputStream();
-			 fileName = "E:/"+fileName;  
-	         String key = AliOssUtil.uploadFile(fileContent, "mall",fileName);  
-	         OSSConfigure ossConfigure = new OSSConfigure("oss.properties");  
-	         apkUrl=ossConfigure.getAccessUrl()+"/"+key;*/
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "success";
-   }
+    @RequestMapping("createTable")
+    public Integer create(@RequestParam("tableName") String tableName){
+        return tbUserService.createTable(tableName);
+    }
+//    @RequestMapping("selectById")
+//   public String aopselectById(HttpServletRequest request, HttpServletResponse response){
+//        UploadExcel ue = new UploadExcel();
+//        List<TbUser> orderList = tbUserService.selectAll();
+//        ue.setTitle(TbUser.getProperty());
+//        ue.setContent(TbUser.getcontent(orderList));
+//        ue.setSheetName("订单信息表");
+//        ue.setCellRangeAddress(TbUser.getRepeatNumber(orderList));
+//        ue.setMergeRow(null);
+//        String fileName = ue.getSheetName() + System.currentTimeMillis()+".xls";
+//        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(ue.getSheetName(), ue.getTitle(), ue.getContent(), null, ue.getCellRangeAddress(), ue.getMergeRow());
+//        try {
+//            this.setResponseHeader(response, fileName);
+//            //FileOutputStream os = new FileOutputStream("E:/"+fileName);
+//            OutputStream os = response.getOutputStream();
+//            wb.write(os);
+//            os.flush();
+//            os.close();
+//
+//    		/*InputStream fileContent =new FileInputStream("E:/"+fileName);
+//    		 //InputStream fileContent = fi.getInputStream();
+//			 fileName = "E:/"+fileName;
+//	         String key = AliOssUtil.uploadFile(fileContent, "mall",fileName);
+//	         OSSConfigure ossConfigure = new OSSConfigure("oss.properties");
+//	         apkUrl=ossConfigure.getAccessUrl()+"/"+key;*/
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "success";
+//   }
     //发送响应流方法
     public void setResponseHeader(HttpServletResponse response, String fileName) {
         try {

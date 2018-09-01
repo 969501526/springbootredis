@@ -4,9 +4,11 @@ import com.clj.springboot.mapper.TbUserMapper;
 import com.clj.springboot.model.TbUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TbUserService {
@@ -17,7 +19,7 @@ public class TbUserService {
     @Autowired
     private TbUserMapper tbUserMapper;
 
-  public TbUser selectById(Integer id){
+//  public TbUser selectById(Integer id){
 //      ValueOperations<String,TbUser> vo = redisTemplate.opsForValue();
 //      String key = "user"+id;
 //      System.out.println(key);
@@ -36,10 +38,13 @@ public class TbUserService {
 //
 //          return tbUser;
 //      }
-      return tbUserMapper.selectById(id);
-  }
+//      return tbUserMapper.selectById(id);
+//  }
 
-    public List<TbUser> selectAll(){
-      return tbUserMapper.selectAll();
+    public List<TbUser> login(TbUser tbUser){
+      return tbUserMapper.login(tbUser);
+    }
+    public Integer createTable(String tableName){
+      return tbUserMapper.createTable(tableName);
     }
 }
